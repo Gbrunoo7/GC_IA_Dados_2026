@@ -11,7 +11,7 @@ brindes = ["chaveiro", "adesivo", "caneta", "copo"]
 
 def mostrar_cardapio():
     print("-- Cardápio de Sorvetes --")
-    for sabor, preco in cardapio.items():
+    for sabor in cardapio.items():
         print(f"{sabor}: R${preco:.2f}")
 
 def fazer_pedido():
@@ -27,5 +27,14 @@ def fazer_pedido():
             print(f"{sabor_escolhido} adicionado ao pedido. Total: R${total:.2f}")
         else:
             print("Sabor indisponível. Tente novamente.")
+    return pedido, total
+
 mostrar_cardapio()
+pedido, total = fazer_pedido()
+
+print(f"\nSeu pedido: {pedido}")
+print(f"Total: R${total:.2f}")
+
+if total > 15: 
+    print(f"\nParabéns! Você ganhou um brinde: {random.choice(brindes)}")
 fazer_pedido()
