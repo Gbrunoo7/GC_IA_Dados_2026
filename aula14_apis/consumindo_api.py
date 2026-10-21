@@ -1,4 +1,3 @@
-pip install requests
 import requests
  
 URL_BASE = "https://www.fruityvice.com/api/fruit"
