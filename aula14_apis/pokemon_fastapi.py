@@ -22,8 +22,6 @@ def get_pokemon_by_name(nome: str):
         "id": data["id"],
     }
 
-# uvicorn pokemon:app --reload
-
 @app.get("/")
 def home():
     return {"message": "API FastAPI Rodando!"}
