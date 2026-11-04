@@ -2,6 +2,8 @@ from fastapi import FastAPI, HTTPException
 import requests
 import uvicorn
 
+# In progress
+
 app = FastAPI(title="Fruits API", description="API para consultar informações de frutas")
 fruits = [] # list in mem
 

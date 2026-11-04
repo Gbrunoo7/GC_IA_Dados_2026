@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
- 
+import requests
+import uvicorn
+
 app = FastAPI(title="API do Cardápio 🍔")
  
  
@@ -58,3 +60,6 @@ def atualizar_item(item_id: int, item: Item):
         raise HTTPException(status_code=404, detail="Item não encontrado")
     cardapio[item_id] = item
     return {"id": item_id, "item": item}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)
