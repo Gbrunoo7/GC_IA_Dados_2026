@@ -7,21 +7,10 @@ import uvicorn
 app = FastAPI(title="Fruits API", description="API para consultar informações de frutas")
 fruits = [] # list in mem
 
-def format_fruit(data: dict):
-    return {
-        "name": data["name"],
-        "id": data["id"],
-        "order": data["order"],
-        "genus": data["genus"],
-        "carbohydrates": data["carbohydrates"],
-        "protein": data["protein"],
-        "fat": data["fat"],
-        "calories": data["calories"],
-        "sugar": data["sugar"],
-    }
+
 
 def get_fruit_by_name(nome: str):
-    nome = nome.lower()
+    nome = nome.lower().strip()
     for fruit in fruits:
         if fruit['name'] == nome:
             return fruit
@@ -29,9 +18,7 @@ def get_fruit_by_name(nome: str):
     resposta = requests.get(f"https://www.fruityvice.com/api/fruit/{nome.strip().lower()}", timeout=10)
     if resposta.status_code != 200:
         raise HTTPException(status_code=404, detail="Fruta não encontrada")
-    resposta.raise_for_status()
-
-    return format_fruit(resposta.json())
+    return resposta.json()
 
 #GET
 @app.get("/")
@@ -39,18 +26,18 @@ def home():
     return {"message": "API FastAPI Rodando!"}
 
 #GET - listar todas as frutas
-@app.get("/all")
+@app.get("/fruit/all")
 def get_all_fruits():
     resposta = requests.get("https://www.fruityvice.com/api/fruit/all", timeout=10)
     if resposta.status_code != 200:
-        raise HTTPException(status_code=502, detail="Não foi possível buscar as frutas")
+        raise HTTPException(status_code=404, detail="Não foi possível buscar as frutas")
     resposta.raise_for_status()
 
-    return [format_fruit(fruit) for fruit in resposta.json()]
+    return resposta.json()
 
 
 #GET - buscar uma fruta pelo nome
-@app.get("/fruits/{nome}")
+@app.get("/fruit/{nome}")
 def get_fruit(nome: str):
     return get_fruit_by_name(nome)
 
